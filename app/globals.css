@@ -4,17 +4,17 @@
 
 /* base styles */
 body {
-  background: #ebf0fa;
-  @apply text-gray-500 m-8;
+  background: #f2f5fb;
+  @apply text-gray-500 to-blue-200;
 }
 h1, h2 {
-  @apply font-bold text-primary text-3xl md:text-5xl lg:text-[4rem] lg:leading-[4.5rem];
+  @apply font-bold text-primary text-3xl md:text-5xl lg:text-[4rem] lg:leading-[4rem];
 }
 h3 {
   @apply text-xl
 }
 main {
-  @apply max-w-5xl my-12 mx-auto px-8;
+  @apply max-w-[90rem] my-12 mx-24 px-8;
 }
 main > h2 {
   @apply mb-4 pb-2 text-base ;

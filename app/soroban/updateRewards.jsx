@@ -1,22 +1,22 @@
 "use client"
 
 import { Transaction, Keypair, xdr, Contract, TransactionBuilder, Networks, BASE_FEE, SorobanRpc, Address } from 'stellar-sdk'
-import { useState } from "react";
+//import { useState } from "react";
 import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
 import { useRouter } from 'next/navigation'
 
 
 
-export default function Deposit(params) {
+export default async function UpdateRewards(params) {
 
-    const [quantity, setQuantity] = useState('')
+    //const [quantity, setQuantity] = useState('')
     const contractId = params.contractId
-    const publicKey = params.publicKey.value;
+    const publicKey = params.publicKey
     const router = useRouter()
 
-    async function handleDeposit(e) {
+    async function handleUpdateRewards(e) {
 
-        e.preventDefault()
+        //e.preventDefault()
 
         const kit = new StellarWalletsKit({
             network: WalletNetwork.TESTNET,
@@ -31,16 +31,18 @@ export default function Deposit(params) {
 
         const sourceAccount = await server.getAccount(publicKey)
 
+        /*
         const amount = xdr.ScVal.scvI128(new xdr.Int128Parts({
             lo: xdr.Uint64.fromString((Number(BigInt(quantity) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
             hi: xdr.Int64.fromString((Number((BigInt(quantity) >> BigInt(64)) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
         }));
+        */
 
         let builtTransaction = new TransactionBuilder(sourceAccount, {
             fee: BASE_FEE,
             networkPassphrase: Networks.TESTNET,
         })
-            .addOperation(contract.call("deposit", new Address(publicKey).toScVal(), amount))
+            .addOperation(contract.call("update_fee_rewards", new Address(publicKey).toScVal()))
             // This transaction will be valid for the next 30 seconds
             .setTimeout(100)
             .build();
@@ -95,24 +97,10 @@ export default function Deposit(params) {
             console.log("Sending transaction failed");
             console.log(JSON.stringify(err));
         }
-    }
-    return (
-        <form className="bg-white pl-0 ml-0" onSubmit={handleDeposit}>
-            <label className="flex">
-                <input
-                    className="bg-gray-50 border p-auto border-gray-200 focus:outline-none text-xs text-gray-900 text-sm rounded-l-lg transition duration-300 block w-full"
-                    required
-                    type="number"
-                    placeholder="Quantity"
-                    onChange={(e) => setQuantity(e.target.value)}
-                    value={quantity}>
-                </input>
-                <button className="text-sm rounded-r-lg m-auto bg-gradient-to-br from-purple-600 to-blue-500 hover:opacity-80 transition duration-300 text-white">
-                    <span className="text-xs">
-                        Deposit
-                    </span>
-                </button>
-            </label>
-        </form>
-    )
+    } return (
+        <button onClick={handleUpdateRewards} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300">
+            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
+                Update rewards
+            </span>
+        </button>)
 }
