@@ -1,5 +1,12 @@
 import { StrKey } from "stellar-sdk";
 
+
+const toHex = (b64) => {
+  const buffer = Buffer.from(b64, 'base64');
+  return buffer.toString('hex')
+}
+
+
 function parseFloat(str, radix)
 {
     var parts = str.split(".");
@@ -22,9 +29,9 @@ export default async function getTotYield(pool, yieldData, radix) {
         for (let i = 0; i < data.length; i++) {
           let yieldValue;
           if (radix == 8) {
-            yieldValue = hexToFloat64(data[i].yield.slice(2), radix);
+            yieldValue = hexToFloat64(toHex(data[i].yield), radix);
           } else {
-            yieldValue = parseInt(data[i].yield.slice(2), radix);
+            yieldValue = parseInt(toHex(data[i].yield), radix);
           }
 
           // Add the integer value to the sum
@@ -41,7 +48,7 @@ export default async function getTotYield(pool, yieldData, radix) {
     )
     
     const yieldDataForContract = yieldData.filter(obj => {
-        return fromStringToKey(obj.contract.slice(2)) === pool
+        return fromStringToKey(toHex(obj.contract)) === pool
     })
 
     const totYield = calculateYieldSum(yieldDataForContract)
@@ -69,7 +76,7 @@ export async function getTotNormYield(pool, yieldData, radix) {
         // Loop through each object in the array
         for (let i = 0; i < data.length; i++) {
           // Decode the hexadecimal "yield" value to an integer
-          const yieldValue = hexToFloat64(data[i].yieldnorm.slice(2));
+          const yieldValue = hexToFloat64(toHex(data[i].yieldnorm));
 
           // Add the integer value to the sum
           if (!isNaN(yieldValue)) {
@@ -86,7 +93,7 @@ export async function getTotNormYield(pool, yieldData, radix) {
     )
     
     const yieldDataForContract = yieldData.filter(obj => {
-        return fromStringToKey(obj.contract.slice(2)) === pool
+        return fromStringToKey(toHex(obj.contract)) === pool
     })
     
     const totNormYield = calculateYieldSum(yieldDataForContract)

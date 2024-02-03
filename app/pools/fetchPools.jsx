@@ -1,5 +1,5 @@
 export async function fetchPools() {
-    const res = await fetch('http://172.232.157.194:5000/graphql', {
+    const res = await fetch('https://api.mercurydata.app:2083/graphql', {
         cache: "no-cache",
         method: 'POST',
         headers: {

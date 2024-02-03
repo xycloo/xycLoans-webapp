@@ -8,6 +8,11 @@ import { AccountAggregatedMetrics } from "../pools/aggregatedMetrics";
 import UpdateRewardsButton from "../components/updateRewardsButton";
 import UpdateRewards from "../soroban/updateRewards";
 
+const toHex = (b64) => {
+    const buffer = Buffer.from(b64, 'base64');
+    return buffer.toString('hex')
+}
+
 export function filterAndSortAccountSupplies(supplies) {
     // Create an object to store unique contracts and their corresponding objects
     const contractMap = {};
@@ -15,7 +20,7 @@ export function filterAndSortAccountSupplies(supplies) {
     // Iterate through the supplies array
     supplies.forEach((item) => {
         const contract = item.contract;
-        const timestampHex = item.timestamp.slice(2); // Remove '\x'
+        const timestampHex = toHex(item.timestamp); // Remove '\x'
         const timestamp = parseInt(timestampHex, 16);
 
         // Check if the contract is already in the map
@@ -25,7 +30,7 @@ export function filterAndSortAccountSupplies(supplies) {
                 contractMap[contract] = {
                     contract: item.contract,
                     timestamp: timestamp,
-                    balance: parseInt(item.balance.slice(2), 16)
+                    balance: parseInt(toHex(item.balance), 16)
                 };
             }
         } else {
@@ -33,7 +38,7 @@ export function filterAndSortAccountSupplies(supplies) {
             contractMap[contract] = {
                 contract: item.contract,
                 timestamp: timestamp,
-                balance: parseInt(item.balance.slice(2), 16)
+                balance: parseInt(toHex(item.balance), 16)
             };
         }
     });
@@ -45,7 +50,7 @@ export function filterAndSortAccountSupplies(supplies) {
 }
 
 export function parseAddress(address) {
-    const parsedAddress = xdr.ScAddress.fromXDR(address.slice(2), "hex");
+    const parsedAddress = xdr.ScAddress.fromXDR(toHex(address), "hex");
     let strkey_addr;
     if (parsedAddress.switch().name === "scAddressTypeAccount") {
         strkey_addr = StrKey.encodeEd25519PublicKey(parsedAddress.accountId().value())
@@ -136,7 +141,7 @@ export default async function Home() {
                             <tbody>
                                 <tr className="bg-white border-b hover:bg-gray-50 text-black font-bold">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {fromStringToKey(node.contract.slice(2)).substring(0, 10) + "..."}
+                                        {fromStringToKey(toHex(node.contract)).substring(0, 10) + "..."}
                                     </th>
                                     <td className="px-6 py-4">
                                         {/*fromStringToKey(node.asset.slice(2)).substring(0, 10) + "..."*/}
@@ -145,19 +150,19 @@ export default async function Home() {
                                         {stroopsToXLM(node.balance, 2)}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {<Yield contractId={fromStringToKey(node.contract.slice(2))} yieldData={YieldAccountData} radix={16} />}
+                                        {<Yield contractId={fromStringToKey(toHex(node.contract))} yieldData={YieldAccountData} radix={16} />}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {<NormYield contractId={fromStringToKey(node.contract.slice(2))} yieldData={YieldAccountData} radix={8} />} %
+                                        {<NormYield contractId={fromStringToKey(toHex(node.contract))} yieldData={YieldAccountData} radix={8} />} %
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                    {<a href={`/pools/${fromStringToKey(node.contract.slice(2))}`} className="font-medium text-[#0fd7a9] hover:underline">Details</a>}
+                                    {<a href={`/pools/${fromStringToKey(toHex(node.contract))}`} className="font-medium text-[#0fd7a9] hover:underline">Details</a>}
                                     </td>
                                     <td className="px-6 py-4 text-right">
-                                     <UpdateRewards contractId={fromStringToKey(node.contract.slice(2))} publicKey={publicAddress} />
+                                     <UpdateRewards contractId={fromStringToKey(toHex(node.contract))} publicKey={publicAddress} />
                                     </td>
                                 </tr>
                             </tbody>

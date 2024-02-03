@@ -2,6 +2,14 @@ import { StrKey } from "stellar-sdk";
 import Yield from "./Yield";
 import NormYield from "./NormYield";
 
+
+const toHex = (b64) => {
+    const buffer = Buffer.from(b64, 'base64');
+    return buffer.toString('hex')
+}
+
+
+
 export function filterAndSortSupplies(supplies) {
     // Create an object to store unique contracts and their corresponding objects
     const contractMap = {};
@@ -9,7 +17,7 @@ export function filterAndSortSupplies(supplies) {
     // Iterate through the supplies array
     supplies.forEach((item) => {
       const contract = item.contract;
-      const timestampHex = item.timestamp.slice(2); // Remove '\x'
+      const timestampHex = toHex(item.timestamp); // Remove '\x'
       const timestamp = parseInt(timestampHex, 16);
   
       // Check if the contract is already in the map
@@ -19,7 +27,7 @@ export function filterAndSortSupplies(supplies) {
           contractMap[contract] = {
             contract: item.contract,
             timestamp: timestamp,
-            supply: parseInt(item.supply.slice(2), 16)
+            supply: parseInt(toHex(item.supply), 16)
           };
         }
       } else {
@@ -27,7 +35,7 @@ export function filterAndSortSupplies(supplies) {
         contractMap[contract] = {
             contract: item.contract,
           timestamp: timestamp,
-          supply: parseInt(item.supply.slice(2), 16)
+          supply: parseInt(toHex(item.supply), 16)
         };
       }
     });
@@ -97,7 +105,7 @@ export default async function GetPools(props) {
                                     <tr className="bg-white border-b hover:bg-gray-50 text-black font-bold">
                                         <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                             {/*node.node.contract*/}
-                                            {fromStringToKey(node.contract.slice(2)).substring(0, 10) + "..."}
+                                            {fromStringToKey(toHex(node.contract)).substring(0, 10) + "..."}
                                         </th>
                                         <td className="px-6 py-4">
                                             {/*fromStringToKey(node.asset.slice(2)).substring(0, 10) + "..."*/}
@@ -106,13 +114,13 @@ export default async function GetPools(props) {
                                             {stroopsToXLM(node.supply, 2)}
                                         </td>
                                         <td className="px-6 py-4">
-                                            <Yield contractId={fromStringToKey(node.contract.slice(2))} yieldData={yieldData} radix={8} />
+                                            <Yield contractId={fromStringToKey(toHex(node.contract))} yieldData={yieldData} radix={8} />
                                         </td>
                                         <td className="px-6 py-4">
-                                            <NormYield contractId={fromStringToKey(node.contract.slice(2))} yieldData={yieldData} radix={8} /> %
+                                            <NormYield contractId={fromStringToKey(toHex(node.contract))} yieldData={yieldData} radix={8} /> %
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <a href={`/pools/${fromStringToKey(node.contract.slice(2))}`} className="font-medium text-[#0fd7a9] hover:underline">Details</a>
+                                            <a href={`/pools/${fromStringToKey(toHex(node.contract))}`} className="font-medium text-[#0fd7a9] hover:underline">Details</a>
                                         </td>
                                     </tr>
                                 </tbody>
