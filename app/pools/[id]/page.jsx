@@ -8,6 +8,9 @@ import sumYieldLastXDays, { Form } from "./yieldForPeriod";
 import Yield from "../Yield";
 import { filterAndSortAccountSupplies, parseAddress } from "@/app/home/page";
 import NormYield from "../NormYield";
+import UpdateRewards from "@/app/soroban/updateRewards";
+import WithdrawMatured from "@/app/soroban/withdrawMatured";
+import Withdraw from "@/app/soroban/withdraw";
 
 
 export default async function PoolDetails({ params }) {
@@ -19,7 +22,11 @@ export default async function PoolDetails({ params }) {
         StrKey.encodeContract(fromHexString(`${key}`))
     )
 
-    const publicKey = cookiesStore.get('publicAddress')
+    const _publicKey = cookiesStore.get('publicAddress')
+    let publicKey
+    if (_publicKey) {
+        publicKey = _publicKey.value
+    }
 
     const data = await fetchPools()
     const ContractSupplyNodes = data.allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S.nodes
@@ -36,11 +43,9 @@ export default async function PoolDetails({ params }) {
     const YieldAccountData = ContractAccountYieldNodes.filter(obj => parseAddress(obj.address) === publicKey)
     const accountData = allAccountData.filter(obj => parseAddress(obj.address) === publicKey)
     const account_supplies = filterAndSortAccountSupplies(accountData)
-    console.log(account_supplies)
     const accountBalanceForPool = account_supplies.find(obj => {
         return fromStringToKey(obj.contract.slice(2)) === params.id
     })
-    console.log(accountBalanceForPool)
 
 
 
@@ -64,15 +69,17 @@ export default async function PoolDetails({ params }) {
                                 <div>
                                     {accountBalanceForPool &&
                                         <div className="flex mt-6">
-                                            <div>
-                                                <p>Balance</p>
-                                                <p>{stroopsToXLM(accountBalanceForPool.balance)}</p>
+                                            <div className="mr-3">
+                                                <p className="text-sm">Balance</p>
+                                                <p className="text-black font-bold">{stroopsToXLM(accountBalanceForPool.balance, 2)}</p>
                                             </div>
-                                            <div>
-                                                <Yield contractId={params.id} yieldData={YieldAccountData} radix={16} />
+                                            <div className="mx-3">
+                                                <p className="text-sm">Yield</p>
+                                                <p className="text-black font-bold"><Yield contractId={params.id} yieldData={YieldAccountData} radix={16} /></p>
                                             </div>
-                                            <div>
-                                                <NormYield contractId={params.id} yieldData={YieldAccountData} radix={8} />
+                                            <div className="ml-3">
+                                                <p className="text-sm">Norm<span className="invisible">_</span>Yield</p>
+                                                <p className="text-black font-bold"><NormYield contractId={params.id} yieldData={YieldAccountData} radix={8} /> %</p>
                                             </div>
                                         </div>}
                                     {!accountBalanceForPool &&
@@ -95,7 +102,9 @@ export default async function PoolDetails({ params }) {
                             <div className="my-5 mx-auto px-8">
                             <p className="text-lg text-primary font-bold text-primary mb-3">Actions</p>
                             <Deposit contractId={params.id} publicKey={publicKey} />
+                            {accountBalanceForPool && <Withdraw contractId={params.id} publicKey={publicKey} />}
                             {accountBalanceForPool && <UpdateRewards contractId={params.id} publicKey={publicKey} />}
+                            {accountBalanceForPool && <WithdrawMatured contractId={params.id} publicKey={publicKey} />}
                             </div>
                         </div>}
                 </div>

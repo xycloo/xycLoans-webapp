@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 
 
 
-export default async function WithdrawMatured(contractId, publicKey) {
+export default async function WithdrawMatured(params) {
 
     //const [quantity, setQuantity] = useState('')
     const contractId = params.contractId

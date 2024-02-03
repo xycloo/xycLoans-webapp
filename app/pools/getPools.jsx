@@ -103,7 +103,7 @@ export default async function GetPools(props) {
                                             {/*fromStringToKey(node.asset.slice(2)).substring(0, 10) + "..."*/}
                                         </td>
                                         <td className="px-6 py-4">
-                                            {stroopsToXLM(node.supply)}
+                                            {stroopsToXLM(node.supply, 2)}
                                         </td>
                                         <td className="px-6 py-4">
                                             <Yield contractId={fromStringToKey(node.contract.slice(2))} yieldData={yieldData} radix={8} />

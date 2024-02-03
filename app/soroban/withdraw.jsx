@@ -7,14 +7,14 @@ import { useRouter } from 'next/navigation'
 
 
 
-export default function Deposit(params) {
+export default function Withdraw(params) {
 
     const [quantity, setQuantity] = useState('')
     const contractId = params.contractId
     const publicKey = params.publicKey.value;
     const router = useRouter()
 
-    async function handleDeposit(e) {
+    async function handleWithdraw(e) {
 
         e.preventDefault()
 
@@ -40,7 +40,7 @@ export default function Deposit(params) {
             fee: BASE_FEE,
             networkPassphrase: Networks.TESTNET,
         })
-            .addOperation(contract.call("deposit", new Address(publicKey).toScVal(), amount))
+            .addOperation(contract.call("withdraw", new Address(publicKey).toScVal(), amount))
             // This transaction will be valid for the next 30 seconds
             .setTimeout(100)
             .build();
@@ -97,7 +97,7 @@ export default function Deposit(params) {
         }
     }
     return (
-        <form className="bg-white pl-0 ml-0 py-0 mt-6 mb-2" onSubmit={handleDeposit}>
+        <form className="bg-white pl-0 ml-0 py-0 mt-2 mb-4" onSubmit={handleWithdraw}>
             <label className="flex">
                 <input
                     className="bg-gray-50 border p-auto border-gray-200 focus:outline-none focus:border-yellow-100 text-xs text-gray-900 text-sm rounded-l-lg transition duration-300 block w-full"
@@ -107,9 +107,9 @@ export default function Deposit(params) {
                     onChange={(e) => setQuantity(e.target.value)}
                     value={quantity}>
                 </input>
-                <button className="text-sm rounded-r-lg m-auto bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 transition duration-300 text-white">
+                <button className="text-sm rounded-r-lg m-auto bg-gradient-to-r from-yellow-500 to-red-500 hover:opacity-80 transition duration-300 text-white">
                     <span className="text-xs">
-                        Deposit
+                        Withdraw
                     </span>
                 </button>
             </label>

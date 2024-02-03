@@ -142,7 +142,7 @@ export default async function Home() {
                                         {/*fromStringToKey(node.asset.slice(2)).substring(0, 10) + "..."*/}
                                     </td>
                                     <td className="px-6 py-4">
-                                        {stroopsToXLM(node.balance)}
+                                        {stroopsToXLM(node.balance, 2)}
                                     </td>
                                     <td className="px-6 py-4">
                                         {<Yield contractId={fromStringToKey(node.contract.slice(2))} yieldData={YieldAccountData} radix={16} />}

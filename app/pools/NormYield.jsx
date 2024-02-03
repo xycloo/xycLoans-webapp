@@ -19,5 +19,5 @@ export default async function NormYield(props) {
         printedNormYield = 0
     } else {printedNormYield = normYield}    
 
-   return ( printedNormYield )
+   return ( printedNormYield.toFixed(4) )
 }
