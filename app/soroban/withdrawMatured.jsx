@@ -11,7 +11,7 @@ export default async function WithdrawMatured(params) {
 
     //const [quantity, setQuantity] = useState('')
     const contractId = params.contractId
-    const publicKey = params.publicKey.value
+    const publicKey = params.publicKey
     const router = useRouter()
 
     async function handleWithdrawMatured(e) {

@@ -11,6 +11,7 @@ import NormYield from "../NormYield";
 import UpdateRewards from "@/app/soroban/updateRewards";
 import WithdrawMatured from "@/app/soroban/withdrawMatured";
 import Withdraw from "@/app/soroban/withdraw";
+import getTotYield from "../getYield";
 
 
 export default async function PoolDetails({ params }) {
@@ -32,6 +33,22 @@ export default async function PoolDetails({ params }) {
     const ContractSupplyNodes = data.allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S.nodes
     const ContractAccountYieldNodes = data.allZephyr9473E79262F2F063D45166Fe1D270D0Fs.nodes
     const allAccountData = data.allZephyr189C96D767479F9619F1C034467D7231S.nodes
+    const allEvents = data.allZephyrC4B405471033E73Ec0083Ca915572228S.nodes
+
+    const topic_scval = xdr.ScVal.scvSymbol("collect").toXDR('hex');
+    const address_scval = xdr.ScVal.scvAddress(xdr.ScAddress.scAddressTypeAccount(xdr.PublicKey.publicKeyTypeEd25519(StrKey.decodeEd25519PublicKey(publicKey)))).toXDR("hex")
+    
+    let total_collected = 0.0;
+    for (let event of allEvents) {
+        let contractStrkey = fromStringToKey(event.contract.slice(2))
+        
+        if (contractStrkey === params.id && event.topic1.slice(2) === topic_scval && event.topic2.slice(2) === address_scval) {
+            const i128 = xdr.ScVal.fromXDR(event.data.slice(2), "hex").i128();
+            total_collected += parseInt((BigInt(i128._attributes.hi._value.toString()) << BigInt(64)) + BigInt(i128._attributes.lo._value.toString()));
+        }
+    }
+    const float_tot_collected = stroopsToXLM(total_collected, 4)
+    console.log(float_tot_collected)
 
     //general pool variables
     const contracts_supplies = filterAndSortSupplies(ContractSupplyNodes)   
@@ -47,7 +64,7 @@ export default async function PoolDetails({ params }) {
         return fromStringToKey(obj.contract.slice(2)) === params.id
     })
 
-
+    const to_mature = stroopsToXLM(await getTotYield(params.id, YieldAccountData, 16), 4) - float_tot_collected;
 
     return (
         <main>
@@ -80,6 +97,14 @@ export default async function PoolDetails({ params }) {
                                             <div className="ml-3">
                                                 <p className="text-sm">Norm<span className="invisible">_</span>Yield</p>
                                                 <p className="text-black font-bold"><NormYield contractId={params.id} yieldData={YieldAccountData} radix={8} /> %</p>
+                                            </div>
+                                            <div className="ml-3">
+                                                <p className="text-sm">Collected<span className="invisible">_</span></p>
+                                                <p className="text-black font-bold">{total_collected}</p>
+                                            </div>
+                                            <div className="ml-3">
+                                                <p className="text-sm">Matured</p>
+                                                <p className="text-black font-bold">{to_mature}</p>
                                             </div>
                                         </div>}
                                     {!accountBalanceForPool &&

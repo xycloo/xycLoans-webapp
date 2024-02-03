@@ -11,13 +11,13 @@ export default function Deposit(params) {
 
     const [quantity, setQuantity] = useState('')
     const contractId = params.contractId
-    const publicKey = params.publicKey.value;
+    const publicKey = params.publicKey;
     const router = useRouter()
 
     async function handleDeposit(e) {
 
         e.preventDefault()
-
+        
         const kit = new StellarWalletsKit({
             network: WalletNetwork.TESTNET,
             selectedWallet: WalletType.FREIGHTER
@@ -30,6 +30,9 @@ export default function Deposit(params) {
         const contract = new Contract(contractAddress)
 
         const sourceAccount = await server.getAccount(publicKey)
+
+        console.log(quantity);
+
 
         const amount = xdr.ScVal.scvI128(new xdr.Int128Parts({
             lo: xdr.Uint64.fromString((Number(BigInt(quantity) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
@@ -44,7 +47,7 @@ export default function Deposit(params) {
             // This transaction will be valid for the next 30 seconds
             .setTimeout(100)
             .build();
-
+        
         let preparedTransaction = await server.prepareTransaction(builtTransaction);
         console.log(preparedTransaction)
 
