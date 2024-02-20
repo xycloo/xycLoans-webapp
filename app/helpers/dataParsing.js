@@ -35,7 +35,7 @@ export const getPoolName = (contract) => {
 const object = List.verified.find(o => o.contract === contract);
 //console.log("contract pool name", object)
 if (object !== undefined) {
-    console.log("pool name", object.name)
+    
     return object.name
 } else {
     const fromStrkey = List.verified.find(o => o.contract === contract);
