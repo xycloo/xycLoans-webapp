@@ -1,5 +1,8 @@
 export async function fetchPools() {
-    const res = await fetch('https://api.mercurydata.app:2083/graphql', {
+  
+  //await new Promise(resolve => setTimeout(resolve, 10000))
+  
+  const res = await fetch('https://api.mercurydata.app:2083/graphql', {
         cache: "no-cache",
         method: 'POST',
         headers: {

@@ -22,7 +22,7 @@ export default function AppNavbar() {
           });
         
         publicKey = await kit.getPublicKey();
-        console.log(publicKey)
+        //console.log(publicKey)
     
         cookies.set('publicAddress', publicKey)
         router.refresh()
@@ -35,14 +35,13 @@ export default function AppNavbar() {
           <Image
             src={Logo}
             width="160"
-            height="100"
-            className="h-8 mb-1"
+            className="h-[30px] md:h-[32px] w-[150px] mb:w-[160px] mb-1"
             alt="xycloans Logo"
           />
         </Navbar.Brand>
       <div className="flex md:order-2">
         {!publicKey && <Button onClick={ConnectWallet} className="mx-2 bg-[#12d7a9] enabled:hover:bg-[#14b780] font-bold">Connect Wallet</Button>}
-        {publicKey && <DropdownButton _publicKey={publicKey.substring(0, 10) + "..."}></DropdownButton>}
+        {publicKey && <DropdownButton _publicKey={publicKey.substring(0, 4) + "..." + publicKey.slice(-4)}></DropdownButton>}
         {/*<p>{publicKey.substring(0, 10) + "..."}</p>*/}
         <Navbar.Toggle />
       </div>

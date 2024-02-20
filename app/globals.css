@@ -5,7 +5,7 @@
 /* base styles */
 body {
   background: #f2f5fb;
-  @apply text-gray-500 to-blue-200;
+  @apply text-gray-500 min-w-[360px];
 }
 h1, h2 {
   @apply font-bold text-primary text-3xl md:text-5xl lg:text-[4rem] lg:leading-[4rem];
@@ -14,13 +14,13 @@ h3 {
   @apply text-xl
 }
 main {
-  @apply max-w-[90rem] mx-auto my-12 xl:mx-24 2xl:mx-auto px-8;
+  @apply max-w-[90rem] mx-auto my-12 xl:mx-16 2xl:mx-auto px-3 sm:px-8;
 }
 main > h2 {
   @apply mb-4 pb-2 text-base ;
 }
 p > a {
-  @apply text-primary;
+  @apply text-[#14b780];
 }
 
 p > a:hover {

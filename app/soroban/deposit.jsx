@@ -4,8 +4,10 @@ import { Transaction, Keypair, xdr, Contract, TransactionBuilder, Networks, BASE
 import { useState } from "react";
 import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
 import { useRouter } from 'next/navigation'
-import {publishTx} from "./tx"
-
+import { publishTx } from "./tx"
+import PoolsImage from "/public/pools-image-xycloans.png"
+import Image from "next/image"
+import { getAssetId } from '../helpers/dataParsing';
 
 
 export default function Deposit(params) {
@@ -13,44 +15,78 @@ export default function Deposit(params) {
     const [quantity, setQuantity] = useState('')
     const contractAddress = params.contractId
     const publicKey = params.publicKey;
+
     const router = useRouter()
+
+    function checkDecimalsAndSetQuantity(input) {
+        let value
+
+        if (input.value.includes('.') && input.value.split('.')[1].length > 7) {
+            value = parseFloat(input.value).toFixed(7)
+        } else { value = input.value}
+        console.log(value)
+
+        setQuantity(value)
+    }
 
     async function handleDeposit(e) {
 
         e.preventDefault()
-    
-        const amount = xdr.ScVal.scvI128(new xdr.Int128Parts({
-            lo: xdr.Uint64.fromString((Number(BigInt(quantity) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
-            hi: xdr.Int64.fromString((Number((BigInt(quantity) >> BigInt(64)) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
-        }));
-    
-        const contract = new Contract(contractAddress)
-        let contract_call = contract.call("deposit", new Address(publicKey).toScVal(), amount);
 
+        const amount = xdr.ScVal.scvI128(new xdr.Int128Parts({
+            lo: xdr.Uint64.fromString((Number(BigInt(quantity * 10000000) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
+            hi: xdr.Int64.fromString((Number((BigInt(quantity * 10000000) >> BigInt(64)) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
+        }));
+
+        const contract = new Contract(contractAddress)
+        const contract_call = contract.call("deposit", new Address(publicKey).toScVal(), amount);
+
+        const assetId = getAssetId(contractAddress)
+        const dialogProps = `Deposited ${quantity} ${assetId} into pool: ${contractAddress}`; 
+        const loadingDialogProps = `Depositing ${quantity} ${assetId} into pool: ${contractAddress}`
+
+        router.push(`${params.contractId}/?show=${loadingDialogProps}`)
+        
         try {
+            //throw new Error('error in depositing')
             await publishTx(publicKey, contract_call);
+            //console.log("response", res)
+            router.push(`${params.contractId}/?success=${dialogProps}`)
             router.refresh()
         } catch (e) {
-            // Error dialog
+            router.push(`${params.contractId}/?error=${e}`)
+            router.refresh()
         }
     }
     return (
-        <form className="bg-white pl-0 ml-0 py-0 mt-6 mb-2" onSubmit={handleDeposit}>
-            <label className="flex">
-                <input
-                    className="bg-gray-50 border p-auto border-gray-200 focus:outline-none focus:border-yellow-100 text-xs text-gray-900 text-sm rounded-l-lg transition duration-300 block w-full"
-                    required
-                    type="number"
-                    placeholder="Quantity"
-                    onChange={(e) => setQuantity(e.target.value)}
-                    value={quantity}>
-                </input>
-                <button className="text-sm rounded-r-lg m-auto bg-gradient-to-r from-purple-500 to-blue-500 hover:opacity-80 transition duration-300 text-white">
-                    <span className="text-xs">
-                        Deposit
-                    </span>
-                </button>
-            </label>
-        </form>
+        <div>
+            <div className="flex justify-center mr-12">
+                <Image
+                    src={PoolsImage}
+                    width="20"
+                    height="100"
+                    className="h-5"
+                    alt="globe"
+                />
+                <p className="font-light text-xs my-auto ml-1">Express quantity in units, not stroops</p>
+            </div>
+            <form className="bg-white mx-auto py-0 !px-0 my-2" onSubmit={handleDeposit}>
+                <label className="flex justify-center">
+                    <input
+                        className="bg-gray-50 border border-gray-200 focus:outline-none focus:border-yellow-100 text-gray-900 text-sm rounded-lg transition duration-300 block w-2/3 mx-1"
+                        required
+                        type="number"
+                        placeholder="Quantity"
+                        onChange={(e) => checkDecimalsAndSetQuantity(e.target)}
+                        value={quantity}>
+                    </input>
+                    <button className="rounded-lg m-auto w-24 bg-gradient-to-r from-purple-500 to-blue-500 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition duration-900 ease-in-out text-white mx-1 shadow-md">
+                        <span className="text-sm">
+                            Deposit
+                        </span>
+                    </button>
+                </label>
+            </form>
+        </div>
     )
 }

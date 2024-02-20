@@ -5,52 +5,86 @@ import { useState } from "react";
 import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
 import { useRouter } from 'next/navigation'
 import {publishTx} from "./tx"
+import PoolsImage from "/public/pools-image-xycloans.png"
+import Image from "next/image"
+import { getAssetId } from '../helpers/dataParsing';
 
 
 export default function Withdraw(params) {
 
     const [quantity, setQuantity] = useState('')
-    const contractId = params.contractId
+    const contractAddress = params.contractId
     const publicKey = params.publicKey;
     const router = useRouter()
+
+    function checkDecimalsAndSetQuantity(input) {
+        let value
+
+        if (input.value.includes('.') && input.value.split('.')[1].length > 7) {
+            value = parseFloat(input.value).toFixed(7)
+        } else { value = input.value}
+        console.log(value)
+
+        setQuantity(value)
+    }
 
     async function handleWithdraw(e) {
 
         e.preventDefault()
 
-        const contractAddress = contractId
-        const contract = new Contract(contractAddress)
-
         const amount = xdr.ScVal.scvI128(new xdr.Int128Parts({
-            lo: xdr.Uint64.fromString((Number(BigInt(quantity) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
-            hi: xdr.Int64.fromString((Number((BigInt(quantity) >> BigInt(64)) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
+            lo: xdr.Uint64.fromString((Number(BigInt(quantity * 10000000) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
+            hi: xdr.Int64.fromString((Number((BigInt(quantity * 10000000) >> BigInt(64)) & BigInt(0xFFFFFFFFFFFFFFFFn))).toString()),
         }));
 
+        const contract = new Contract(contractAddress)
         const contract_call = contract.call("withdraw", new Address(publicKey).toScVal(), amount);
+        
+        const assetId = getAssetId(contractAddress)
+        const dialogProps = `Withdrawn ${quantity} ${assetId} from pool: ${contractAddress}`; 
+        const loadingDialogProps = `Withdrawing ${quantity} ${assetId} from pool: ${contractAddress}`
+
+        
+        router.push(`${params.contractId}/?show=${loadingDialogProps}`)
+
         try {
             await publishTx(publicKey, contract_call);
+            router.push(`${params.contractId}/?success=${dialogProps}`)
             router.refresh()
         } catch (e) {
-            // Error dialog
+            router.push(`${params.contractId}/?error=${e}`)
+            router.refresh()
         }
     }
     return (
-        <form className="bg-white pl-0 ml-0 py-0 mt-2 mb-4" onSubmit={handleWithdraw}>
-            <label className="flex">
+        <div>
+            <div className="flex justify-center mr-12">
+                <Image
+                    src={PoolsImage}
+                    width="20"
+                    height="100"
+                    className="h-5"
+                    alt="globe"
+                />
+                <p className="font-light text-xs my-auto ml-1">Express quantity in units, not stroops</p>
+            </div>
+        <form className="bg-white mx-auto py-0 !px-0 my-2" onSubmit={handleWithdraw}>
+            <label className="flex justify-center">
                 <input
-                    className="bg-gray-50 border p-auto border-gray-200 focus:outline-none focus:border-yellow-100 text-xs text-gray-900 text-sm rounded-l-lg transition duration-300 block w-full"
+                    className="bg-gray-50 border border-gray-200 focus:outline-none focus:border-yellow-100 text-gray-900 text-sm rounded-lg transition duration-300 block w-2/3 mx-1"
                     required
                     type="number"
                     placeholder="Quantity"
-                    onChange={(e) => setQuantity(e.target.value)}
+                    onChange={(e) => checkDecimalsAndSetQuantity(e.target)}
                     value={quantity}>
                 </input>
-                <button className="text-sm rounded-r-lg m-auto bg-gradient-to-r from-yellow-500 to-red-500 hover:opacity-80 transition duration-300 text-white">
-                    <span className="text-xs">
+                <button className="rounded-lg m-auto w-24 bg-gradient-to-r from-purple-500 to-blue-500 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition duration-900 ease-in-out text-white mx-1 shadow-md">
+                    <span className="text-sm">
                         Withdraw
                     </span>
                 </button>
             </label>
         </form>
+        </div>
     )
 }

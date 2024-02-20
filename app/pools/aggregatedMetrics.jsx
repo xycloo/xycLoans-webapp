@@ -1,6 +1,16 @@
 import { filterAndSortSupplies, intToFloat, stroopsToXLM } from "./getPools";
 
-export default async function AggregatedMetrics(props) {
+// gets the umenr of existing pools
+// only works if set as default function (?)
+export default function numberOfPools(contractSupplies) {
+  const supplies = filterAndSortSupplies(contractSupplies)
+  const number = supplies.length
+
+  return number
+}
+
+// tot supply for all pools (not used since need to convert all the values to aggregate to USD before)
+export function AggregatedMetrics(props) {
     const data = props.data
     const contract_supplies = data.allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S.nodes
     
@@ -29,11 +39,12 @@ export default async function AggregatedMetrics(props) {
     const suppliesSum = calculateSuppliesSum(contracts)
 
     return (
-        <p className="font-bold text-black text-lg">{suppliesSum} XLM</p>
+        <p className="text-gray-900 font-semibold text-lg">{suppliesSum}</p>
     )
 }
 
-//need a different function for accounts, sinc account objects have the balance argument instead of supply(as it is for the contracts)
+// need a different function for accounts, sinc account objects have the balance argument instead of supply(as it is for the contracts)
+// tot supply for all pools of a specific account (not used since need to convert all the values to aggregate to USD before)
 export function AccountAggregatedMetrics(props) {
   
   const accountSupplies = props.data
@@ -62,6 +73,6 @@ export function AccountAggregatedMetrics(props) {
   const balanceSum = calculateSuppliesSum(accountSupplies)
 
   return (
-      <p className="font-bold text-black text-lg">{balanceSum} XLM</p>
+      <p className="text-gray-900 font-semibold text-lg">{balanceSum}</p>
   )
 }

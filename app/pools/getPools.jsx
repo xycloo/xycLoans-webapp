@@ -1,7 +1,9 @@
 import { StrKey } from "stellar-sdk";
 import Yield from "./Yield";
 import NormYield from "./NormYield";
-
+import { getAssetId, getAssetLogo, getPoolName } from "../helpers/dataParsing";
+import Image from "next/image";
+import Placeholder from "/public/currency-xycloans.png"
 
 const toHex = (b64) => {
     const buffer = Buffer.from(b64, 'base64');
@@ -76,16 +78,17 @@ export default async function GetPools(props) {
 
     return (
                 <div>
-                    <div className="relative overflow-x-auto sm:rounded-lg">
+                    <div className="relative overflow-x-auto rounded-md">
                         <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                            <thead className="text-xs text-gray-500 bg-gray-50">
+                            <thead className="text-xs text-gray-500 bg-white border-b border-gray-100">
                                 <tr>
                                     <th scope="col" className="px-6 py-3 font-light">
-                                        Pool Id
+                                        Asset
                                     </th>
                                     <th scope="col" className="px-6 py-3 font-light">
-                                        Asset Id
+                                        Pool
                                     </th>
+                                    
                                     <th scope="col" className="px-6 py-3 font-light">
                                         Supply
                                     </th>
@@ -102,14 +105,32 @@ export default async function GetPools(props) {
                             </thead>
                             {contracts.map((node) => (
                                 <tbody>
-                                    <tr className="bg-white border-b hover:bg-gray-50 text-black font-bold">
-                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                            {/*node.node.contract*/}
-                                            {fromStringToKey(toHex(node.contract)).substring(0, 10) + "..."}
-                                        </th>
+                                    <tr className="bg-white border-b hover:bg-gray-50 text-gray-700 text-sm lg:text-base font-medium">
                                         <td className="px-6 py-4">
-                                            {/*fromStringToKey(node.asset.slice(2)).substring(0, 10) + "..."*/}
+                                        <div className="flex">
+                                            {getAssetLogo(fromStringToKey(toHex(node.contract))) &&
+                                                <Image
+                                                    src={getAssetLogo(fromStringToKey(toHex(node.contract)))}
+                                                    width="30"
+                                                    height="100"
+                                                    className=""
+                                                    alt="globe"
+                                                />}
+                                            {!getAssetLogo(fromStringToKey(toHex(node.contract))) &&
+                                                <Image
+                                                    src={Placeholder}
+                                                    width="30"
+                                                    height="100"
+                                                    className=""
+                                                    alt="globe"
+                                                />}
+                                            <p className="my-auto ml-2">{getAssetId(fromStringToKey(toHex(node.contract)))}</p>
+                                        </div>
                                         </td>
+                                        <th scope="row" className="px-6 py-4 font-medium text-gray-700 whitespace-nowrap">
+                                            {/*fromStringToKey(toHex(node.contract)).substring(0, 10) + "..."*/}
+                                            {getPoolName(fromStringToKey(toHex(node.contract)))}
+                                        </th>
                                         <td className="px-6 py-4">
                                             {stroopsToXLM(node.supply, 2)}
                                         </td>
@@ -120,7 +141,11 @@ export default async function GetPools(props) {
                                             <NormYield contractId={fromStringToKey(toHex(node.contract))} yieldData={yieldData} radix={8} /> %
                                         </td>
                                         <td className="px-6 py-4 text-right">
-                                            <a href={`/pools/${fromStringToKey(toHex(node.contract))}`} className="font-medium text-[#0fd7a9] hover:underline">Details</a>
+                                            <a href={`/pools/${fromStringToKey(toHex(node.contract))}`} className="flex justify-end">
+                                                <button className="bg-[#12eab7] hover:bg-primary border border-[#12eab7] hover:border-primary transition duration-300 ease-in-out text-gray-800 rounded-lg font-medium shadow-md">
+                                                    Details
+                                                </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>

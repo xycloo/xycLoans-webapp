@@ -18,21 +18,40 @@ export default async function UpdateRewards(params) {
     async function handleUpdateRewards(e) {
 
         //e.preventDefault()
-        console.log("updating")
         const contractAddress = contractId
         const contract = new Contract(contractAddress)
         const contract_call = contract.call("update_fee_rewards", new Address(publicKey).toScVal());
         
-        try {
-            await publishTx(publicKey, contract_call);
-            router.refresh()
-        } catch (e) {
-            // Error dialog
+        const loadingMessage = "Updating matured fee rewards"
+        const message = "Updated matured fee rewards"
+        
+        if (!params.fromHome) {
+            router.push(`${params.contractId}/?show=${loadingMessage}`)
+
+            try {
+                await publishTx(publicKey, contract_call);
+                router.push(`${params.contractId}/?success=${message}`)
+                router.refresh()
+            } catch (e) {
+                router.push(`${params.contractId}/?error=${e}`)
+                router.refresh()
+            }
+        } else if (params.fromHome) {
+            router.push(`home/?show=${loadingMessage}`)
+
+            try {
+                await publishTx(publicKey, contract_call);
+                router.push(`home/?success=${message}`)
+                router.refresh()
+            } catch (e) {
+                router.push(`home/?error=${e}`)
+                router.refresh()
+            }
         }
     } return (
-        <button onClick={handleUpdateRewards} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300">
-            <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
-                Update rewards
-            </span>
-        </button>)
+        <button onClick={handleUpdateRewards} className="rounded-lg w-40 m-auto bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition duration-900 ease-in-out text-white font-normal mx-1 shadow-md">
+        <span className="text-sm w-max mx-auto">
+            Update rewards
+        </span>
+    </button>)
 }

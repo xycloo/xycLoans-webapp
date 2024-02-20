@@ -1,4 +1,5 @@
 import { StrKey } from "stellar-sdk";
+import { parseBase64Yield } from "../helpers/dataParsing";
 
 
 const toHex = (b64) => {
@@ -19,7 +20,7 @@ function parseFloat(str, radix)
 
 
 //get the tot yield for the specified pool for the specified set of data (either for the whole pool or for a specific account)
-export default async function getTotYield(pool, yieldData, radix) {
+export default function getTotYield(pool, yieldData, radix) {
     
     function calculateYieldSum(data) {
         // Initialize the sum
@@ -27,12 +28,16 @@ export default async function getTotYield(pool, yieldData, radix) {
       
         // Loop through each object in the array
         for (let i = 0; i < data.length; i++) {
+          /*
           let yieldValue;
           if (radix == 8) {
             yieldValue = hexToFloat64(toHex(data[i].yield), radix);
           } else {
             yieldValue = parseInt(toHex(data[i].yield), radix);
           }
+          */
+          //this substitutes the above
+          let yieldValue = parseBase64Yield(data[i].yield, radix)
 
           // Add the integer value to the sum
           sum += yieldValue;
@@ -67,7 +72,7 @@ function hexToFloat64(hexString) {
   }
 
 //gets the tot norm yield for the specified pool for the the specified set of data (either for the whole pool or for a specific account)
-export async function getTotNormYield(pool, yieldData, radix) {
+export function getTotNormYield(pool, yieldData, radix) {
     function calculateYieldSum(data) {
         
         // Initialize the sum
@@ -101,6 +106,31 @@ export async function getTotNormYield(pool, yieldData, radix) {
     return (
         totNormYield
     )
+}
 
+export function getTotAccountNormYield(yieldData, radix) {
+  function calculateYieldSum(data) {
+      
+      // Initialize the sum
+      let sum = 0.0;
+    
+      // Loop through each object in the array
+      for (let i = 0; i < data.length; i++) {
+        // Decode the hexadecimal "yield" value to an integer
+        const yieldValue = hexToFloat64(toHex(data[i].yieldnorm));
 
+        // Add the integer value to the sum
+        if (!isNaN(yieldValue)) {
+          sum += yieldValue;
+        }
+      }
+      // Return the total sum
+      return sum;
+    }
+  
+  const totNormYield = calculateYieldSum(yieldData)
+
+  return (
+      totNormYield
+  )
 }

@@ -19,17 +19,24 @@ export default async function WithdrawMatured(params) {
         const contractAddress = contractId
         const contract = new Contract(contractAddress)
         const contract_call = contract.call("withdraw_matured", new Address(publicKey).toScVal())
+
+        const loadingMessage = "Withdrawing matured fee rewards"
+        const message = "Withdrawn matured fee rewards"
+        
+        router.push(`${params.contractId}/?show=${loadingMessage}`)
     
         try {
             await publishTx(publicKey, contract_call);
+            router.push(`${params.contractId}/?success=${message}`)
             router.refresh()
         } catch (e) {
-            // Error dialog
+            router.push(`${params.contractId}/?error=${e}`)
+            router.refresh()
         }
     } return (
-        <button onClick={handleWithdrawMatured} className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300">
-            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">
-                Withdraw Rewards
-            </span>
-        </button>)
+        <button onClick={handleWithdrawMatured} className="rounded-lg w-40 m-auto bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition duration-900 ease-in-out text-white mx-1 shadow-md">
+        <span className="text-sm w-max mx-auto">
+            Withdraw rewards
+        </span>
+    </button>)
 }
