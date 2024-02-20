@@ -134,7 +134,7 @@ export default async function Home({searchParams}) {
                 <div className="inline-block w-full py-5 mb-4 bg-gradient-to-r from-blue-500 to-purple-500 bg-opacity-100 rounded-md shadow-sm">
                     <div className="flex my-2 w-full">
                     <div className="py-3 w-2/3 md:w-1/2">
-                        <div className="flex ml-4 md:ml-8">
+                        <div className="flex ml-4 sm:ml-8">
                             <Image
                                 src={Supplies}
                                 width="40"
@@ -146,9 +146,9 @@ export default async function Home({searchParams}) {
                         </div>
                         </div>
                         <div className="flex justify-end items-center w-1/3 md:w-1/2">
-                        <div className="text-center mr-4 md:mr-10">
-                            <p className="text-xs md:text-sm text-gray-300">Tot weighted yield</p>
-                            <p className="text-white font-semibold text-base md:text-lg">{totAccountYield.toFixed(4)} %</p>
+                        <div className="text-center mr-4 sm:mr-10">
+                            <p className="text-xs sm:text-sm text-gray-300">Tot weighted yield</p>
+                            <p className="text-white font-semibold text-base sm:text-lg">{totAccountYield.toFixed(4)} %</p>
                             {/*  //to calculate the tot balance of account  <AccountAggregatedMetrics data={lastObjectXPool} />*/}
                         </div>
                     </div>
@@ -198,7 +198,7 @@ export default async function Home({searchParams}) {
                             </div>
                         </div>
                     </div>}
-                {lastObjectXPool.length !==0 && <div className="relative overflow-x-auto sm:rounded-lg">
+                {lastObjectXPool.length !==0 && <div className="relative overflow-x-auto rounded-md">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                         <thead className="text-xs text-gray-500 bg-white border-b border-gray-100">
                             <tr>

@@ -34,8 +34,8 @@ export default function AppNavbar() {
       <Navbar.Brand href="/">
           <Image
             src={Logo}
-            width="160"
-            className="h-[30px] md:h-[32px] w-[150px] mb:w-[160px] mb-1"
+            width="170"
+            className="h-[30px] sm:h-[32px] w-[150px] sm:w-[160px] mb-1"
             alt="xycloans Logo"
           />
         </Navbar.Brand>
