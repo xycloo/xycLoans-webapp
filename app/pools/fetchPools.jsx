@@ -78,3 +78,36 @@ export async function fetchPools() {
     data
   )
 }
+
+export async function fetchAllEvents() {
+  const res = await fetch('https://api.mercurydata.app:2083/graphql', {
+        cache: "no-cache",
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+      body: JSON.stringify({
+        query: `query MyQuery {
+          allZephyrC4B405471033E73Ec0083Ca915572228S {
+            nodes {
+                sequence
+                timestamp
+                contract
+                topic1
+                topic2
+                topic3
+                topic4
+                data
+              
+            }
+          }
+        }`})
+    })
+
+  const json_res = await res.json();
+  const data = json_res.data;
+
+  return (
+    data
+  )
+}
