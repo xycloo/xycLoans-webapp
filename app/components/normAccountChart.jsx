@@ -10,13 +10,33 @@ export const NormAccountChart = (params) => {
   // Extract timestamps and yields from data
   
   const balanceTimestamps = params.balanceData.map(entry => parseTimestamp(entry.timestamp))
-  const balanceDates = timestampsToDates(balanceTimestamps, false)
-  const balances = params.balanceData.map(entry => stroopsToXLM(parseInt(toHex(entry.balance), 16)), 4)
+  let balanceDates = timestampsToDates(balanceTimestamps, false)
+  let balances = params.balanceData.map(entry => stroopsToXLM(parseInt(toHex(entry.balance), 16)), 4)
+
+  if (params.balanceData.length === 1) {
+    balances.unshift(0);
+    balanceDates.unshift(new Date(balanceTimestamps[0] - 1000000))
+  }
 
   const yieldTimestamps = params.yieldData.map(entry => parseTimestamp(entry.timestamp))
-  const yieldDates = timestampsToDates(yieldTimestamps)
-  const yields = params.yieldData.length === 1 ? [parseFloat(stroopsToXLM(parseBase64Yield(params.yieldData[0].yield, 16), 3))] : params.yieldData.map(entry => parseFloat(stroopsToXLM(parseBase64Yield(entry.yield, 16), 3)))
+  let yieldDates = timestampsToDates(yieldTimestamps)
+  let yields = params.yieldData.map(entry => parseFloat(stroopsToXLM(parseBase64Yield(entry.yield, 16), 3)))
+
+  if (params.yieldData.length === 1) {
+    yields.unshift(0);
+    yieldDates.unshift(new Date(balanceTimestamps[0] - 1000000))
+  }
+
+  if (balanceTimestamps[balanceTimestamps.length - 1] < yieldTimestamps[yieldTimestamps.length - 1]) {
+    balances.push(balances[balances.length - 1])
+    balanceDates.push(yieldTimestamps[yieldTimestamps.length - 1])
+  }
   
+  if (balanceTimestamps[balanceTimestamps.length - 1] > yieldTimestamps[yieldTimestamps.length - 1]) {
+    yields.push(balances[yields.length - 1])
+    yieldDates.push(balanceTimestamps[balanceTimestamps.length - 1])
+  }
+
   // Calculate accumulated yield over time
   const accumulatedYields = [0];
   let accumulatedYield = 0;
@@ -26,16 +46,8 @@ export const NormAccountChart = (params) => {
   }
   
   //console.log("yield:", yieldDates, accumulatedYields)
-
-  console.log("balances", balances)
-  console.log("yields", accumulatedYields)
   const normalizedSupply = Normalize(balances)
   const normalizedYield = Normalize(accumulatedYields)
-  console.log(normalizedSupply)
-  console.log(normalizedYield)
-  console.log(balanceDates)
-  console.log(yieldDates)
-  console.log("\n\n", new Date(parseTimestamp("AAAAAGXJEEE=")))
 
   // Create trace for accumulated yield
 

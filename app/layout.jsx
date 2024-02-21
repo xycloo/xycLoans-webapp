@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import AppNavbar from './components/nav'
 import { CookiesProvider } from 'next-client-cookies/server';
+import Head from 'next/head'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -19,3 +20,7 @@ export default function RootLayout({ children }) {
     </html>
   )
 }
+
+
+export const dynamic = 'force-dynamic'
+export const runtime = 'edge' // 'nodejs' (default) | 'edge'

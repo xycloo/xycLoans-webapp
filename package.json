@@ -10,13 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
-<<<<<<< HEAD
     "array-normalize": "^2.0.0",
-=======
-    "@table-library/react-table-library": "^4.1.7",
-    "active-table": "^1.1.4",
-    "active-table-react": "^1.1.4",
->>>>>>> a3628cb1b03d3be447c40557ef395db582a6b368
     "chart.js": "^4.4.1",
     "flowbite": "^2.2.1",
     "flowbite-react": "^0.7.2",

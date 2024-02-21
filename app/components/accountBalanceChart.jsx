@@ -6,8 +6,14 @@ const Plot = dynamic(() => import('react-plotly.js'), { ssr: false });
 export const AccountBalanceChart = (params) => {
   // Extract timestamps and yields from data
   const timestamps = params.data.map(entry => parseTimestamp(entry.timestamp))
-  const dates = timestampsToDates(timestamps, false)
-  const balances = params.data.map(entry => stroopsToXLM(parseInt(toHex(entry.balance), 16)), 3)
+  let dates = timestampsToDates(timestamps, false)
+  let balances = params.data.map(entry => stroopsToXLM(parseInt(toHex(entry.balance), 16)), 3)
+  
+  if (params.data.length === 1) {
+    balances.unshift(0);
+    dates.unshift(new Date(timestamps[0] - 10000))
+  }
+
   //console.log(supplies)
   
   // Create trace for accumulated yield

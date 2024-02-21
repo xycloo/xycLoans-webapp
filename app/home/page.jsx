@@ -174,7 +174,7 @@ export default async function Home({ searchParams }) {
                                         />
                                         <div className="ml-3">
                                             <p className="text-gray-700 font-semibold">Explore markets</p>
-                                            <p className="text-sm text-gray-500">Take a look at the <a href="/pools">existing pools</a>, or jump to the <a href="/liquidity-providers">liquidity providers</a> section to learn more.</p>
+                                            <p className="text-sm text-gray-500">Take a look at the <a href="/pools">existing pools</a>, or jump to the <a href="https://docs.xycloans.app/lenders/welcome-lender">liquidity providers</a> section to learn more.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@ export default async function Home({ searchParams }) {
                                         />
                                         <div className="ml-3">
                                             <p className="text-gray-700 font-semibold">Use flash loans</p>
-                                            <p className="text-sm text-gray-500">Go to the <a href="/borrowers">borrowers</a> section to learn how to request and use flash loans.</p>
+                                            <p className="text-sm text-gray-500">Go to the <a href="https://docs.xycloans.app/borrowers/borrowing-from-xycloans">borrowers</a> section to learn how to request and use flash loans.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -305,7 +305,7 @@ export default async function Home({ searchParams }) {
                     />
                     <div className="ml-3">
                         <p className="text-gray-700 font-semibold text-sm lg:text-base">Explore markets</p>
-                        <p className="text-xs lg:text-sm text-gray-500">Take a look at the <a href="/pools">existing pools</a>, or jump to the <a href="/liquidity-providers">liquidity providers</a> section in our docs to learn more.</p>
+                        <p className="text-xs lg:text-sm text-gray-500">Take a look at the <a href="/pools">existing pools</a>, or jump to the <a href="https://docs.xycloans.app/lenders/welcome-lender">liquidity providers</a> section in our docs to learn more.</p>
                     </div>
                 </div>
             </div>
