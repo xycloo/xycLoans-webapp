@@ -24,7 +24,7 @@ export default function Deposit(params) {
         if (input.value.includes('.') && input.value.split('.')[1].length > 7) {
             value = parseFloat(input.value).toFixed(7)
         } else { value = input.value}
-        console.log(value)
+        //console.log(value)
 
         setQuantity(value)
     }
@@ -80,7 +80,7 @@ export default function Deposit(params) {
                         onChange={(e) => checkDecimalsAndSetQuantity(e.target)}
                         value={quantity}>
                     </input>
-                    <button className="rounded-lg m-auto w-24 bg-gradient-to-r from-purple-500 to-blue-500 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition duration-900 ease-in-out text-white mx-1 shadow-md">
+                    <button className="rounded-lg m-auto w-24 bg-gradient-to-r from-[#6366f1] to-[#9333ea] hover:bg-gradient-to-r hover:from-[#4f46e5] hover:to-[#7e22ce] transition duration-900 ease-in-out text-white mx-1 shadow-md">
                         <span className="text-sm">
                             Deposit
                         </span>

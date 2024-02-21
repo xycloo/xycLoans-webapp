@@ -231,7 +231,7 @@ export default async function PoolDetails({ params, searchParams }) {
 
     return (
         <main>
-            <div className="inline-block w-full py-5 mb-4 bg-[#12eab7] bg-opacity-40 bg-gradient-to-r from-blue-500 to-purple-500 bg-opacity-100 rounded-md shadow-sm">
+            <div className="inline-block w-full py-5 mb-4 bg-[#12eab7] bg-opacity-40 bg-gradient-to-r from-[#6366f1] to-[#9333ea] bg-opacity-100 rounded-md shadow-sm">
                 <div className="flex my-2 w-full">
                     <div className="flex py-3 w-1/4 ml-10 mr-6">
                         {getAssetLogo(params.id) &&

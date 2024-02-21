@@ -9,7 +9,6 @@ export const AccountYieldChart = (params) => {
     const dates = timestampsToDates(timestamps)
     let yields = params.data.length === 1 ? [parseFloat(stroopsToXLM(parseBase64Yield(params.data[0].yield, 16), 5))] : params.data.map(entry => parseFloat(stroopsToXLM(parseBase64Yield(entry.yield, 16), 3)));
     yields = yields.filter(val => val !== 0);
-    console.log("yields", yields)
 
     // Calculate accumulated yield over time
     const accumulatedYields = [0];

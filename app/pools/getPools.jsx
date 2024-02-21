@@ -96,7 +96,7 @@ export default async function GetPools(props) {
                                         Tot Yield
                                     </th>
                                     <th scope="col" className="px-6 py-3 font-light">
-                                        Tot Normalized Yield
+                                        Tot Weighted Yield
                                     </th>
                                     <th scope="col" className="px-6 py-3 font-light">
                                         <span className="sr-only">Details</span>
@@ -137,7 +137,7 @@ export default async function GetPools(props) {
                                         <td className="px-6 py-4">
                                             <Yield contractId={fromStringToKey(toHex(node.contract))} yieldData={yieldData} radix={8} />
                                         </td>
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 whitespace-nowrap">
                                             <NormYield contractId={fromStringToKey(toHex(node.contract))} yieldData={yieldData} radix={8} /> %
                                         </td>
                                         <td className="px-6 py-4 text-right">

@@ -2,6 +2,8 @@ import dynamic from 'next/dynamic'
 import { convertTimestampsToDates, parseBase64Yield, parseTimestamp, timestampsToDates, toHex } from '../helpers/dataParsing';
 import { stroopsToXLM } from '../pools/getPools';
 import { Normalize } from '../helpers/dataManipulation';
+import normalize from "array-normalize"
+
 const Plot = dynamic(() => import('react-plotly.js'), { ssr: false });
 
 export const NormChart = (params) => {
@@ -25,7 +27,7 @@ export const NormChart = (params) => {
   }
   
   //console.log("yield:", yieldDates, accumulatedYields)
-
+  
   const normalizedSupply = Normalize(supplies)
   const normalizedYield = Normalize(accumulatedYields)
 

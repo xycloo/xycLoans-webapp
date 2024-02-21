@@ -24,11 +24,17 @@ import Link from "next/link";
 import SuccessModal from "@/app/components/successModal";
 import LoadingModal from "@/app/components/loadingModal";
 import ErrorModal from "@/app/components/errorModal";
-import { getAssetId, getAssetLogo, getPoolName, getPoolPublisher } from "../../helpers/dataParsing";
+import { getAssetId, getAssetLogo, getPoolName, getPoolPublisher, parseTimestamp } from "../../helpers/dataParsing";
 
 const toHex = (b64) => {
     const buffer = Buffer.from(b64, 'base64');
     return buffer.toString('hex')
+}
+
+function sortByTimestamp(array) {
+    return array.sort((a, b) => {
+        return new Date(parseTimestamp(a.timestamp)) - new Date(parseTimestamp(b.timestamp));
+    });
 }
 
 
@@ -48,11 +54,11 @@ export default async function PoolDetails({ params, searchParams }) {
     }
 
     const data = await fetchPools()
-    const ContractSupplyNodes = data.allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S.nodes
-    const ContractAccountYieldNodes = data.allZephyr9473E79262F2F063D45166Fe1D270D0Fs.nodes
-    const allAccountData = data.allZephyr189C96D767479F9619F1C034467D7231S.nodes
-    const allEvents = data.allZephyrC4B405471033E73Ec0083Ca915572228S.nodes
-    const yieldData = data.allZephyr28439Ed255B6Ccbb589A4635958Eec88S.nodes
+    const ContractSupplyNodes = sortByTimestamp(data.allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S.nodes)
+    const ContractAccountYieldNodes = sortByTimestamp(data.allZephyr9473E79262F2F063D45166Fe1D270D0Fs.nodes)
+    const allAccountData = sortByTimestamp(data.allZephyr189C96D767479F9619F1C034467D7231S.nodes)
+    const allEvents = sortByTimestamp(data.allZephyrC4B405471033E73Ec0083Ca915572228S.nodes)
+    const yieldData = sortByTimestamp(data.allZephyr28439Ed255B6Ccbb589A4635958Eec88S.nodes)
 
 
     //as function: collected
@@ -72,7 +78,6 @@ export default async function PoolDetails({ params, searchParams }) {
         const float_tot_collected = stroopsToXLM(total_collected, 4)
     */
     // this function substitutes the above code
-    console.log("publickey", publicKey)
     let float_tot_collected
     if (publicKey) {float_tot_collected = CalculateCollected(publicKey, allEvents, params.id)}
 
@@ -130,7 +135,7 @@ export default async function PoolDetails({ params, searchParams }) {
 
     return (
         <main>
-            <div className="inline-block w-full py-5 mb-4 bg-[#12eab7] bg-opacity-40 bg-gradient-to-r from-blue-500 to-purple-500 bg-opacity-100 rounded-md shadow-sm">
+            <div className="inline-block w-full py-5 mb-4 bg-[#12eab7] bg-opacity-40 bg-gradient-to-r from-[#6366f1] to-[#9333ea] bg-opacity-100 rounded-md shadow-sm">
                 <div className="flex my-2 w-full">
                     <div className="py-3 w-2/3 md:w-1/2">
                         <div className="flex ml-4 sm:ml-8">

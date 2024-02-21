@@ -49,7 +49,7 @@ export default async function UpdateRewards(params) {
             }
         }
     } return (
-        <button onClick={handleUpdateRewards} className="rounded-lg w-40 m-auto bg-gradient-to-r from-blue-500 to-purple-500 hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600 transition duration-900 ease-in-out text-white font-normal mx-1 shadow-md">
+        <button onClick={handleUpdateRewards} className="rounded-lg w-40 m-auto bg-gradient-to-r from-[#6366f1] to-[#9333ea] hover:bg-gradient-to-r hover:from-[#4f46e5] hover:to-[#7e22ce] transition duration-900 ease-in-out text-white font-normal mx-1 shadow-md">
         <span className="text-sm w-max mx-auto">
             Update rewards
         </span>

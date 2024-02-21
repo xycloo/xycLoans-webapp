@@ -12,7 +12,7 @@ export default async function Pools() {
 
     return (
         <main>
-            <div className="inline-block w-full py-5 mb-4 bg-[#12eab7] bg-opacity-40 bg-gradient-to-r from-blue-500 to-purple-500 bg-opacity-100 border rounded-md shadow-sm">
+            <div className="inline-block w-full py-5 mb-4 bg-[#12eab7] bg-opacity-40 bg-gradient-to-r from-[#6366f1] to-[#9333ea] bg-opacity-100 border rounded-md shadow-sm">
                 <div className="flex my-2 w-full">
                 <div className="py-3 w-2/3 md:w-1/2">
                     <div className="flex ml-4 sm:ml-8">
