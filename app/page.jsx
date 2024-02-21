@@ -6,7 +6,9 @@ import Image from 'next/image'
 import { useCookies } from 'next-client-cookies'
 import { useRouter } from 'next/navigation'
 import { redirect } from 'next/navigation'
-
+import HALO from "vanta/dist/vanta.halo.min";
+import * as THREE from "three";
+import React, { useState, useEffect, useRef } from "react";
 
 
 export default function Home() {
@@ -22,13 +24,35 @@ export default function Home() {
     redirect('/home')
   }
 
+  const [vantaEffect, setVantaEffect] = useState(0)
+  const myRef = useRef(null)
+  useEffect(() => {
+   if (!vantaEffect) {
+      setVantaEffect(HALO({
+        el: myRef.current,
+        THREE: THREE,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        baseColor: 0x3a0a41,
+        backgroundColor: 0x0,
+        size: 1.50
+    }))        
+    }
+    return () => {
+      if (vantaEffect) vantaEffect.destroy()
+    }
+  }, [vantaEffect])
   return (
-    <main className="text-center grid place-items-center h-[80vh]">
+    
+    <div className="text-center grid place-items-center h-screen bg-black" ref={myRef}>
       <div className="">
         <div className="">
-          <div className="text-black text-opacity-80">
-            <h1 className="">Powering <span className="text-[#14b780]">Flash Loans</span> On Soroban.</h1>
-            <h3 className="text-base text-grey-700 px-1 pt-10 pb-5 md:pb-0">Provide liquidity and borrow your flash loans on the <span className="text-[#0fd7a9] font-bold">Stellar-Soroban</span> ecosystem. Audited,
+          <div className="text-white text-opacity-80">
+            <h1 className="text-white text-6xl md:text-8xl px-10">Powering <span className="text-[#0fd7a9]">Flash Loans</span> On Soroban.</h1>
+            <h3 className="text-base text-white px-1 pt-10 pb-5 md:pb-0 font-medium">Provide liquidity and borrow your flash loans on the <span className="text-[#0fd7a9] font-bold">Stellar-Soroban</span> ecosystem. Audited,
              efficient and with <span className="text-[#0fd7a9] font-bold">zero</span> protocol fees.</h3>
           </div>
         </div>
@@ -44,6 +68,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   )
 }

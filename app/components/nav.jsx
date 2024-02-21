@@ -40,7 +40,7 @@ export default function AppNavbar() {
           />
         </Navbar.Brand>
       <div className="flex md:order-2">
-        {!publicKey && <Button onClick={ConnectWallet} className="mx-2 bg-[#12d7a9] enabled:hover:bg-[#14b780] font-bold">Connect Wallet</Button>}
+        {!publicKey && <Button onClick={ConnectWallet} className="mx-2 bg-[#12d7a9] enabled:hover:bg-[#14b780] font-semibold text-black">Connect Wallet</Button>}
         {publicKey && <DropdownButton _publicKey={publicKey.substring(0, 4) + "..." + publicKey.slice(-4)}></DropdownButton>}
         {/*<p>{publicKey.substring(0, 10) + "..."}</p>*/}
         <Navbar.Toggle />
