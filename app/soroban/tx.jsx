@@ -1,6 +1,4 @@
-import { StellarWalletsKit } from '../../Stellar-Wallets-Kit/src/stellar-wallets-kit'; // use local since cloudflare seems not to build through ssh git
-import { WalletNetwork} from '../../Stellar-Wallets-Kit/src/types'
-import {allowAllModules} from '../../Stellar-Wallets-Kit/src/utils'
+import { StellarWalletsKit, WalletNetwork, allowAllModules } from '@creit.tech/stellar-wallets-kit';
 import { Transaction, Keypair, xdr, TransactionBuilder, Networks, BASE_FEE, SorobanRpc } from 'stellar-sdk'
 import { useRouter } from 'next/navigation'
 

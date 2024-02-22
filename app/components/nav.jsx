@@ -3,9 +3,7 @@
 import { useCookies } from 'next-client-cookies'
 import Logo from "/public/xycloans_logo-removebg-preview.png"
 import Image from 'next/image'
-import { StellarWalletsKit } from '../../Stellar-Wallets-Kit/src/stellar-wallets-kit'; // use local since cloudflare seems not to build through ssh git
-import { WalletNetwork} from '../../Stellar-Wallets-Kit/src/types'
-import {allowAllModules} from '../../Stellar-Wallets-Kit/src/utils'
+import { StellarWalletsKit, WalletNetwork, allowAllModules } from '@creit.tech/stellar-wallets-kit';
 import { Button, Navbar } from 'flowbite-react';
 import DropdownButton from './dropdownButton';
 import { useRouter } from 'next/navigation'
