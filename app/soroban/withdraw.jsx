@@ -44,14 +44,14 @@ export default function Withdraw(params) {
         const loadingDialogProps = `Withdrawing ${quantity} ${assetId} from pool: ${contractAddress}`
 
         
-        router.push(`${params.contractId}/?show=${loadingDialogProps}`)
+        router.push(`?show=${loadingDialogProps}`)
 
         try {
             await publishTx(publicKey, contract_call);
-            router.push(`${params.contractId}/?success=${dialogProps}`)
+            router.push(`?success=${dialogProps}`)
             router.refresh()
         } catch (e) {
-            router.push(`${params.contractId}/?error=${e}`)
+            router.push(`?error=${e}`)
             router.refresh()
         }
     }

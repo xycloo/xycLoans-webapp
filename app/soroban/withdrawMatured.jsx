@@ -22,14 +22,14 @@ export default async function WithdrawMatured(params) {
         const loadingMessage = "Withdrawing matured fee rewards"
         const message = "Withdrawn matured fee rewards"
         
-        router.push(`${params.contractId}/?show=${loadingMessage}`)
+        router.push(`?show=${loadingMessage}`)
     
         try {
             await publishTx(publicKey, contract_call);
-            router.push(`${params.contractId}/?success=${message}`)
+            router.push(`?success=${message}`)
             router.refresh()
         } catch (e) {
-            router.push(`${params.contractId}/?error=${e}`)
+            router.push(`?error=${e}`)
             router.refresh()
         }
     } return (
