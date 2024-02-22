@@ -71,3 +71,5 @@ export default function Home() {
     </div>
   )
 }
+
+export const dynamic = 'force-dynamic'

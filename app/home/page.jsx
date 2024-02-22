@@ -1,5 +1,3 @@
-"use client"
-
 import { cookies } from "next/headers";
 import { fetchPools } from "../pools/fetchPools"
 import { StrKey, xdr } from "stellar-sdk";
@@ -344,3 +342,5 @@ export default async function Home({ searchParams }) {
         </main>
     )
 }
+
+export const dynamic = 'force-dynamic'

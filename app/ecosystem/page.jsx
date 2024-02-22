@@ -108,3 +108,5 @@ export default async function FlashLoanEcosystem({searchParams}) {
         </main>
     )
 }
+
+export const dynamic = 'force-dynamic'
