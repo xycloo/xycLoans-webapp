@@ -4,7 +4,7 @@ import numberOfPools from "./aggregatedMetrics";
 
 export default async function Pools() {
     const { fetchPools } = await import("./fetchPools");
-    const GetPools = await import("./getPools");
+    //const GetPools = await import("./getPools");
     const data = await fetchPools()
     const supplyData = data.allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S.nodes
 
@@ -32,7 +32,7 @@ export default async function Pools() {
                     </div>
                 </div>
             </div>
-            <GetPools data={data} />
+      {/*      <GetPools data={data} />*/}
         </main>
     )
 }
