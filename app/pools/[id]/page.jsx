@@ -1,3 +1,5 @@
+"use client"
+
 import { StrKey, xdr } from "stellar-sdk";
 import { cookies } from 'next/headers'
 import Deposit from "../../soroban/deposit";

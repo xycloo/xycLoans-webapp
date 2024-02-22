@@ -1,3 +1,5 @@
+"use client"
+
 import { cookies } from "next/headers";
 import { fetchPools } from "../pools/fetchPools"
 import { StrKey, xdr } from "stellar-sdk";
