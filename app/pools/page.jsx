@@ -1,5 +1,4 @@
 import Image from "next/image";
-import AggregatedMetrics from "./aggregatedMetrics";
 import { fetchPools } from "./fetchPools";
 import GetPools from "./getPools";
 import PoolsImage from "/public/globe-xycloans.png"
@@ -38,3 +37,6 @@ export default async function Pools() {
         </main>
     )
 }
+
+export const dynamic = 'force-dynamic'
+export const runtime = 'edge' // 'nodejs' (default) | 'edge'

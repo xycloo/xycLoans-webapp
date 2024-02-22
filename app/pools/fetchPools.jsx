@@ -12,46 +12,37 @@ export async function fetchPools() {
         query: `query MyQuery {
           allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S {
             nodes {
-               
-                
                 timestamp
                 contract
-                supply
-              
+                supply      
             }
           }
           
           allZephyr189C96D767479F9619F1C034467D7231S {
             nodes {
-              
                 contract
                 address
                 timestamp
-                balance
-              
+                balance        
             }
           }
           
           allZephyr9473E79262F2F063D45166Fe1D270D0Fs {
             nodes {
-              
                 contract
                 address
                 timestamp
                 yieldnorm
                 yield
-            
             }
           }
           
           allZephyr28439Ed255B6Ccbb589A4635958Eec88S {
             nodes {
-              
                 contract
                 timestamp
                 yieldnorm
                 yield
-              
             }
           }
 
@@ -65,7 +56,6 @@ export async function fetchPools() {
                 topic3
                 topic4
                 data
-              
             }
           }
         }`})
