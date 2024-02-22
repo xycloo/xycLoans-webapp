@@ -3,7 +3,7 @@ import PoolsImage from "/public/globe-xycloans.png"
 import numberOfPools from "./aggregatedMetrics";
 import * as React from 'react';
 
-export default async function Pools() {
+export default async function PoolsDisplay({searchParams}) {
     const { fetchPools } = await import("./fetchPools");
     //const GetPools = await import("./getPools");
     const data = await fetchPools()
