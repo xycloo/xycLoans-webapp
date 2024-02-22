@@ -342,5 +342,3 @@ export default async function Home({ searchParams }) {
         </main>
     )
 }
-
-export const dynamic = 'force-dynamic'
