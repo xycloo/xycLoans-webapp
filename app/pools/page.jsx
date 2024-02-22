@@ -1,6 +1,7 @@
 import Image from "next/image";
 import PoolsImage from "/public/globe-xycloans.png"
 import numberOfPools from "./aggregatedMetrics";
+import * as React from 'react';
 
 export default async function Pools() {
     const { fetchPools } = await import("./fetchPools");
