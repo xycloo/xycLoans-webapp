@@ -1,11 +1,10 @@
 import Image from "next/image";
-import { fetchPools } from "./fetchPools";
-import GetPools from "./getPools";
 import PoolsImage from "/public/globe-xycloans.png"
 import numberOfPools from "./aggregatedMetrics";
 
 export default async function Pools() {
-
+    const { fetchPools } = await import("./fetchPools");
+    const GetPools = await import("./getPools");
     const data = await fetchPools()
     const supplyData = data.allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S.nodes
 

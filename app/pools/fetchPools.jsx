@@ -61,6 +61,7 @@ export async function fetchPools() {
         }`})
     })
 
+
   const json_res = await res.json();
   const data = json_res.data;
 
