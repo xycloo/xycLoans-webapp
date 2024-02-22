@@ -25,7 +25,6 @@
     "react-dom": "^18",
     "react-plotly.js": "^2.6.0",
     "stellar-sdk": "^11.2.1",
-    "stellar-wallets-kit": "github:Creit-Tech/Stellar-Wallets-Kit",
     "table-library": "^0.0.0-watch",
     "three": "^0.121.0",
     "vanta": "^0.5.24"

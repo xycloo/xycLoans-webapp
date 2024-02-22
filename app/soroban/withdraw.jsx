@@ -2,7 +2,6 @@
 
 import { Transaction, Keypair, xdr, Contract, TransactionBuilder, Networks, BASE_FEE, SorobanRpc, Address } from 'stellar-sdk'
 import { useState } from "react";
-import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
 import { useRouter } from 'next/navigation'
 import {publishTx} from "./tx"
 import PoolsImage from "/public/pools-image-xycloans.png"
