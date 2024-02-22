@@ -1,4 +1,6 @@
-import { cookies } from "next/headers";
+"use client"
+
+//import { cookies } from "next/headers";
 import { fetchPools } from "../pools/fetchPools"
 import { StrKey, xdr } from "stellar-sdk";
 import { stroopsToXLM } from "../pools/getPools";
@@ -21,6 +23,7 @@ import Placeholder from "/public/currency-xycloans.png"
 import LoadingModal from "../components/loadingModal";
 import SuccessModal from "../components/successModal";
 import ErrorModal from "../components/errorModal";
+import { getCookie } from 'cookies-next';
 
 
 const toHex = (b64) => {
@@ -78,7 +81,6 @@ export function parseAddress(address) {
 export default async function Home({ searchParams }) {
 
     const data = await fetchPools()
-    const cookiesStore = cookies()
 
     //the objects that represent the change in balance for every account for each pool every time the balance changes
     const allAccountData = data.allZephyr189C96D767479F9619F1C034467D7231S.nodes
@@ -89,9 +91,7 @@ export default async function Home({ searchParams }) {
     //all events
     const allEvents = data.allZephyrC4B405471033E73Ec0083Ca915572228S.nodes
 
-    const _publicAddress = cookiesStore.get('publicAddress')
-    const publicAddress = _publicAddress.value
-
+    const publicAddress = getCookie('publicAddress');
     //different than the fromStringToKey function in calculateCollected  
     const fromHexString = (hexString) => Uint8Array.from(hexString.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)));
     const fromStringToKey = (key) => (
