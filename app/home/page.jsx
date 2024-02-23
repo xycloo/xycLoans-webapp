@@ -163,7 +163,7 @@ export default async function Home({ searchParams }) {
                         <div className="lg:w-1/2 lg:ml-4 h-96">
                             <div className="h-[183.5px] bg-white border border-gray-100 rounded-md mb-4">
                                 <div className="my-5 mx-auto px-8 flex flex-col">
-                                    <p className="text-lg text-gray-700 font-medium mb-4">Liquidity providers</p>
+                                    <p className="text-lg text-gray-700 font-medium mb-2 sm:mb-4">Liquidity providers</p>
                                     <div className="flex items-center justify-start pt-3">
                                         <Image
                                             src={Explore}
@@ -181,7 +181,7 @@ export default async function Home({ searchParams }) {
                             </div>
                             <div className="h-[183.5px] bg-white border border-gray-100 rounded-md">
                                 <div className="my-5 mx-auto px-8 flex flex-col">
-                                    <p className="text-lg text-gray-700 font-medium mb-4">Borrowers</p>
+                                    <p className="text-lg text-gray-700 font-medium mb-2 sm:mb-4">Borrowers</p>
                                     <div className="flex items-center justify-start pt-3">
                                         <Image
                                             src={Borrow}

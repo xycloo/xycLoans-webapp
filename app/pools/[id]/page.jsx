@@ -199,7 +199,7 @@ export default async function PoolDetails({ params, searchParams }) {
                                                 </p>
                                             </div>
                                             <div className="w-auto">
-                                                <p className="text-sm text-gray-400 font-light">Norm<span className="invisible">_</span>Yield</p>
+                                                <p className="text-sm text-gray-400 font-light">Weighted<span className="invisible">_</span>Yield</p>
                                                 <p className="text-gray-700 font-medium">
                                                     <NormYield contractId={params.id} yieldData={YieldAccountData} radix={8} /> %
                                                 </p>
