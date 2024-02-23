@@ -17,3 +17,5 @@ export default function Loading() {
         </div>
     )
 }
+
+export const dynamic = 'force-dynamic'

@@ -1,4 +1,4 @@
-import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
+import { StellarWalletsKit, WalletNetwork, allowAllModules } from '@creit.tech/stellar-wallets-kit';
 import { Transaction, Keypair, xdr, TransactionBuilder, Networks, BASE_FEE, SorobanRpc } from 'stellar-sdk'
 import { useRouter } from 'next/navigation'
 
@@ -25,10 +25,12 @@ export const publishTx = async (publicKey, contract_call) => {
             .build();
 
 
+        const FREIGHTER_ID = 'freighter'; 
         const kit = new StellarWalletsKit({
             network: WalletNetwork.TESTNET,
-            selectedWallet: WalletType.FREIGHTER
-        });
+            selectedWalletId: FREIGHTER_ID,
+            modules: allowAllModules(),
+            });
 
         let preparedTransaction = await server.prepareTransaction(builtTransaction);
         console.log(preparedTransaction)

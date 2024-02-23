@@ -1,15 +1,17 @@
+"use client"
+
 import Image from "next/image";
-import AggregatedMetrics from "./aggregatedMetrics";
-import { fetchPools } from "./fetchPools";
-import GetPools from "./getPools";
 import PoolsImage from "/public/globe-xycloans.png"
 import numberOfPools from "./aggregatedMetrics";
+import * as React from 'react';
+import { fetchPools } from "./fetchPools";
+import GetPools from "./getPools";
 
-export default async function Pools() {
-
+export default async function PoolsDisplay({searchParams}) {
     const data = await fetchPools()
     const supplyData = data.allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S.nodes
-
+    console.log(supplyData);
+    
     return (
         <main>
             <div className="inline-block w-full py-5 mb-4 bg-[#12eab7] bg-opacity-40 bg-gradient-to-r from-[#6366f1] to-[#9333ea] bg-opacity-100 border rounded-md shadow-sm">
@@ -38,3 +40,6 @@ export default async function Pools() {
         </main>
     )
 }
+
+export const dynamic = 'force-dynamic'
+export const runtime = 'edge' // 'nodejs' (default) | 'edge'

@@ -2,7 +2,6 @@
 
 import { Transaction, Keypair, xdr, Contract, TransactionBuilder, Networks, BASE_FEE, SorobanRpc, Address } from 'stellar-sdk'
 import { useState } from "react";
-import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
 import { useRouter } from 'next/navigation'
 import { publishTx } from "./tx"
 import PoolsImage from "/public/pools-image-xycloans.png"
@@ -45,16 +44,16 @@ export default function Deposit(params) {
         const dialogProps = `Deposited ${quantity} ${assetId} into pool: ${contractAddress}`; 
         const loadingDialogProps = `Depositing ${quantity} ${assetId} into pool: ${contractAddress}`
 
-        router.push(`${params.contractId}/?show=${loadingDialogProps}`)
+        router.push(`?show=${loadingDialogProps}`)
         
         try {
             //throw new Error('error in depositing')
             await publishTx(publicKey, contract_call);
             //console.log("response", res)
-            router.push(`${params.contractId}/?success=${dialogProps}`)
+            router.push(`?success=${dialogProps}`)
             router.refresh()
         } catch (e) {
-            router.push(`${params.contractId}/?error=${e}`)
+            router.push(`?error=${e}`)
             router.refresh()
         }
     }

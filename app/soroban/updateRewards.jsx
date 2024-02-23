@@ -2,7 +2,6 @@
 
 import { Transaction, Keypair, xdr, Contract, TransactionBuilder, Networks, BASE_FEE, SorobanRpc, Address } from 'stellar-sdk'
 //import { useState } from "react";
-import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
 import { useRouter } from 'next/navigation'
 import {publishTx} from "./tx"
 
@@ -26,14 +25,14 @@ export default async function UpdateRewards(params) {
         const message = "Updated matured fee rewards"
         
         if (!params.fromHome) {
-            router.push(`${params.contractId}/?show=${loadingMessage}`)
+            router.push(`?show=${loadingMessage}`)
 
             try {
                 await publishTx(publicKey, contract_call);
-                router.push(`${params.contractId}/?success=${message}`)
+                router.push(`?success=${message}`)
                 router.refresh()
             } catch (e) {
-                router.push(`${params.contractId}/?error=${e}`)
+                router.push(`?error=${e}`)
                 router.refresh()
             }
         } else if (params.fromHome) {

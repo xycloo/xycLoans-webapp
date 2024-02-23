@@ -22,5 +22,4 @@ export default function RootLayout({ children }) {
 }
 
 
-export const dynamic = 'force-dynamic'
 export const runtime = 'edge' // 'nodejs' (default) | 'edge'

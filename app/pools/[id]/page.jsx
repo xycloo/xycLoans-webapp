@@ -1,5 +1,7 @@
+"use client"
+
 import { StrKey, xdr } from "stellar-sdk";
-import { cookies } from 'next/headers'
+import { getCookie } from 'cookies-next';
 import Deposit from "../../soroban/deposit";
 import Interact from "@/app/interact";
 import { filterAndSortSupplies, stroopsToXLM } from "../getPools";
@@ -40,18 +42,12 @@ function sortByTimestamp(array) {
 
 export default async function PoolDetails({ params, searchParams }) {
 
-    const cookiesStore = cookies()
-
     const fromHexString = (hexString) => Uint8Array.from(hexString.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)));
     const fromStringToKey = (key) => (
         StrKey.encodeContract(fromHexString(`${toHex(key)}`))
     )
 
-    const _publicKey = cookiesStore.get('publicAddress')
-    let publicKey
-    if (_publicKey) {
-        publicKey = _publicKey.value
-    }
+    const publicKey = getCookie('publicAddress')
 
     const data = await fetchPools()
     const ContractSupplyNodes = sortByTimestamp(data.allZephyrD6Eacc6B192F3Ae14116A75Fac2D1Db6S.nodes)

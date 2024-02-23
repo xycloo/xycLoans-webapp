@@ -3,22 +3,25 @@
 import { useCookies } from 'next-client-cookies'
 import Logo from "/public/xycloans_logo-removebg-preview.png"
 import Image from 'next/image'
-import { StellarWalletsKit, WalletNetwork, WalletType } from 'stellar-wallets-kit';
+import { StellarWalletsKit, WalletNetwork, allowAllModules } from '@creit.tech/stellar-wallets-kit';
 import { Button, Navbar } from 'flowbite-react';
 import DropdownButton from './dropdownButton';
 import { useRouter } from 'next/navigation'
-
 
 export default function AppNavbar() {
     const cookies = useCookies();
     const router = useRouter()
 
+    console.log(WalletNetwork)
+
     let publicKey = cookies.get('publicAddress')
     
-    async function ConnectWallet() {        
+    async function ConnectWallet() {       
+        const FREIGHTER_ID = 'freighter'; 
         const kit = new StellarWalletsKit({
             network: WalletNetwork.TESTNET,
-            selectedWallet: WalletType.FREIGHTER
+            selectedWalletId: FREIGHTER_ID,
+            modules: allowAllModules(),
           });
         
         publicKey = await kit.getPublicKey();
