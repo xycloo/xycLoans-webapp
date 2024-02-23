@@ -335,9 +335,9 @@ export default async function Home({ searchParams }) {
                     </div>}
             </div>
             <>
-                {is_show && <LoadingModal id={"home"} msg={show} />}
-                {is_success && <SuccessModal id={"home"} msg={success} />}
-                {is_error && <ErrorModal id={"home"} error={error} />}
+                {is_show && <LoadingModal msg={show} fromHome={true} />}
+                {is_success && <SuccessModal msg={success} fromHome={true} />}
+                {is_error && <ErrorModal error={error} fromHome={true} />}
             </>
         </main>
     )

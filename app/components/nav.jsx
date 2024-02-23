@@ -54,7 +54,7 @@ export default function AppNavbar() {
         </Navbar.Link>
         <Navbar.Link href="/pools" className="md:hover:text-[#14b780]">Pools</Navbar.Link>
         <Navbar.Link href="/ecosystem" className="md:hover:text-[#14b780]">Explorer</Navbar.Link>
-        <Navbar.Link href="https://docs.xycloans.app" className="md:hover:text-[#14b780]">Documentation</Navbar.Link>
+        <Navbar.Link target="_blank" href="https://docs.xycloans.app" className="md:hover:text-[#14b780]">Documentation</Navbar.Link>
       </Navbar.Collapse>
     </Navbar>
 
