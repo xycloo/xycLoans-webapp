@@ -52,19 +52,19 @@ export default function Home() {
         <div className="">
           <div className="text-white text-opacity-80">
             <h1 className="text-white text-6xl md:text-8xl px-10">Powering <span className="text-[#0fd7a9]">Flash Loans</span> On Soroban.</h1>
-            <h3 className="text-base text-white px-1 pt-10 pb-5 md:pb-0 font-medium">Provide liquidity and borrow your flash loans on the <span className="text-[#0fd7a9] font-bold">Stellar-Soroban</span> ecosystem. Audited,
+            <h3 className="text-base text-white px-1 pt-10 pb-5 md:pb-0 font-normal">Provide liquidity and borrow your flash loans on the <span className="text-[#0fd7a9] font-bold">Stellar-Soroban</span> ecosystem. Audited,
              efficient and with <span className="text-[#0fd7a9] font-bold">zero</span> protocol fees.</h3>
           </div>
         </div>
-        <div className="flex mt-10 m-auto max-w-[450px]">
-        <div className="my-4">
+        <div className="flex flex-col sm:flex-row mt-10 m-auto max-w-[450px]">
+          <div className="my-4">
             <a href="https://docs.xycloans.app/" target="_blank" className="mx-4 text-white bg-gradient-to-r from-green-400 to-blue-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Get Started</a>
           </div>
           <div className="my-4">
             <a href="https://github.com/xycloo/xycloans/" target="_blank" className="mx-4 text-white bg-gradient-to-r from-green-400 to-blue-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Github</a>
           </div>
           <div className="my-4">
-            <a href="/pools"  className="mx-4 text-white bg-gradient-to-r from-green-400 to-blue-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Explore Pools</a>
+            <a href="/pools" className="mx-4 text-white bg-gradient-to-r from-green-400 to-blue-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-green-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Explore Pools</a>
           </div>
         </div>
       </div>

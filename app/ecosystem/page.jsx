@@ -46,7 +46,7 @@ export default async function FlashLoanEcosystem({searchParams}) {
             <div>
                 <div className="max-w-[1000px] m-auto">
                     <h2 className="text-2xl">Flash Loans Ecosystem Explorer</h2>
-                    <p className="my-10">We believe that it's the protocol's job to display all the related activity given that there's prior knowledge of the indexed structures and endless 
+                    <p className="my-10 text-sm sm:text-base">We believe that it's the protocol's job to display all the related activity given that there's prior knowledge of the indexed structures and endless 
                        potential customization. This is why we index all events of contracts linking a xycloans pool (an audited and soroban-optimized flash loan pool module) hash as their binary.
                        <br/><br/><span className="font-light italic">Search and xycLoans API docs coming soon!</span></p>
                     

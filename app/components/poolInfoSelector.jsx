@@ -13,6 +13,8 @@ import { AccountBalanceChart } from "./accountBalanceChart";
 import { AccountYieldChart } from "./accountYieldChart";
 import { NormAccountChart } from "./normAccountChart";
 import Loading from "../loading";
+import Image from "next/image";
+import MercuryLogo from "/public/mercury-logo-nobg.png"
 
 export const PoolInfo = (params) => {
   const [showPoolData, setShowPoolData] = useState(true);
@@ -61,9 +63,17 @@ export const PoolInfo = (params) => {
       Your data
     </button>
   </div>
-  <div className="ml-auto invisible sm:visible">
+  <div className="ml-auto invisible sm:visible flex">
+          <Image
+            src={MercuryLogo}
+            width="30"
+            className="w-[34px] h-[32px] my-auto mr-1"
+            alt="logo"
+          />
+          <div className="">
     <p className="text-xs text-gray-400 font-light">Data powered by</p>
     <a href="https://mercurydata.app/"><p className="text-sm text-[#ff8935] font-medium">Mercury</p></a>
+  </div>
   </div>
 </div>
 
