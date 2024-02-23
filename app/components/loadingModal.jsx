@@ -15,7 +15,7 @@ export default function LoadingModal(props) {
   
               {/* Navigates back to the base URL - closing the modal */}
               <Link
-                href={`${props.id}/`}
+                href={`/pools/${props.id}/`}
                 className="px-4 py-2 bg-primary text-white text-base font-medium rounded-md shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
               >
                 Close

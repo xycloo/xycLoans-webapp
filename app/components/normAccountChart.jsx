@@ -13,19 +13,19 @@ export const NormAccountChart = (params) => {
   let balanceDates = timestampsToDates(balanceTimestamps, false)
   let balances = params.balanceData.map(entry => stroopsToXLM(parseInt(toHex(entry.balance), 16)), 4)
 
-  if (params.balanceData.length === 1) {
+  //if (params.balanceData.length === 1) {
     balances.unshift(0);
-    balanceDates.unshift(new Date(balanceTimestamps[0] - 1000000))
-  }
+    balanceDates.unshift(new Date(balanceTimestamps[0] - 10000000))
+  //}
 
   const yieldTimestamps = params.yieldData.map(entry => parseTimestamp(entry.timestamp))
   let yieldDates = timestampsToDates(yieldTimestamps)
   let yields = params.yieldData.map(entry => parseFloat(stroopsToXLM(parseBase64Yield(entry.yield, 16), 3)))
 
-  if (params.yieldData.length === 1) {
+  //if (params.yieldData.length === 1) {
     yields.unshift(0);
-    yieldDates.unshift(new Date(balanceTimestamps[0] - 1000000))
-  }
+    yieldDates.unshift(new Date(balanceTimestamps[0] - 10000000))
+  //}
 
   if (balanceTimestamps[balanceTimestamps.length - 1] < yieldTimestamps[yieldTimestamps.length - 1]) {
     balances.push(balances[balances.length - 1])

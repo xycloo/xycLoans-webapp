@@ -9,10 +9,10 @@ export const AccountBalanceChart = (params) => {
   let dates = timestampsToDates(timestamps, false)
   let balances = params.data.map(entry => stroopsToXLM(parseInt(toHex(entry.balance), 16)), 3)
   
-  if (params.data.length === 1) {
+  //if (params.data.length === 1) {
     balances.unshift(0);
-    dates.unshift(new Date(timestamps[0] - 10000))
-  }
+    dates.unshift(new Date(timestamps[0] - 10000000))
+  //}
 
   //console.log(supplies)
   
